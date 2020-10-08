@@ -1,0 +1,38 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+def Predict_by_PB( image_path_name):
+	<span>#image_path_name: 要预测的图片的文件路径</span>
+	
+	def LoadPB(pb_file,return_elements):
+		<span>#warning: 该函数用于读取pb文件，返回网络图和关键张量            </span>
+		<span>#param pb_file: pb文件路径</span>
+		<span>#param return_elements: 这是一个列表，输入输出张量的名称            </span>
+		<span>#return: graph: 一个图，利用session去run输出张量时，需要这个</span>
+		<span>#return: return_elements: 这是一个列表，输入输出张量           </span>
+		
+		with tf.gfile.FastGFile(pb_file, 'rb') as f:    <span>#读取pb文件</span>
+			frozen_graph_def = tf.GraphDef()            <span>#获取默认的图</span>
+			frozen_graph_def.ParseFromString(f.read())  <span>#利用默认图加载pb文件内数据</span>
+		
+		graph = tf.Graph()<span>#创建一个新图</span>
+		with graph.as_default():    <span>#改变graph为默认图</span>
+			<span>#获取pb文件中固定的tensor</span>
+			return_elements = tf.import_graph_def(frozen_graph_def,return_elements=return_elements)
+		
+		return graph,return_elements
+		
+		
+	pb_gragh, pb_list_tensor = LoadPB('file_name.pb',['input_data:0', 'keep_prob:0', 'pre_result:0']) <span>#加载模型,获取计算图与关键张量</span>
+	image = Alter_image_size(cv2.imread(image_path_name), [416, 416]) <span>#改变图片的大小,使其符合网络的要求，<a href='./Alter_image_size.html'>Alter_image_size(image, target_size)</a>函数用来改变图片尺寸</span>
+	image = image.reshape(1,416,416,3)
+	with tf.Session(graph=pb_gragh) as sess: <span>#给session添加默认图</span>
+		print(sess.run(pb_list_tensor[2], feed_dict = {pb_list_tensor[0]: image, pb_list_tensor[1]:0.5})) <span>#预测</span>
+</pre>
+</body>
+</html>

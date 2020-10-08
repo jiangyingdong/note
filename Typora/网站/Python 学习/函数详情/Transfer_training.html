@@ -1,0 +1,72 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import numpy as np
+import random
+import cv2
+import os
+import time
+def Transfer_training(ckpt_file_path='./models/model_1594287957_6687.ckpt', datasetts=r'C:\Users\jyd\Desktop\data'):
+    <span>#迁移训练</span>
+    <span>#ckpt_file_path: ckpt文件路径</span>
+    <span>#datasets: 训练用样本集的路径</span>
+    with tf.Session() as sess:
+        <span>#加载网络图,.meta文件</span>
+        saver = tf.compat.v1.train.import_meta_graph(ckpt_file_path+'.meta')
+        <span>#加载参数</span>
+        saver.restore(sess, ckpt_file_path)
+        <span>#通过变量名获取关键变量</span>
+        graph = tf.compat.v1.get_default_graph()
+        lables = graph.get_tensor_by_name('lables:0')
+        output_data = graph.get_tensor_by_name('output_data:0')
+        input_data = graph.get_tensor_by_name('input_data:0')
+        keep_prob = graph.get_tensor_by_name('keep_prob:0')
+        <span>#训练</span>
+        train_images, train_lables, test_images, test_lables = <a href='./Build_datasets.html'>Build_datasets</a>(folder_to_dict(datasetts), [224,224])
+        cross_entropy = tf.reduce_mean(-tf.reduce_sum(lables*tf.log(output_data),axis=1))<span>#交叉熵,tf.clip_by_value(output_data,1e-8,1.0)</span>
+        train_step = tf.compat.v1.train.GradientDescentOptimizer(1e-2).minimize(cross_entropy)<span>#训练</span>
+        
+        data_X = list()<span>#训练次数的历史记录</span>
+        data_Y = list()<span>#loss的历史记录</span>
+        data_Y1 = list()<span>#召回率的历史记录</span>
+        data_Y2 = list()<span>#精确率的历史记录</span>
+        g = <a href='./show_data.html'>show_data()</a>
+        next(g)
+        for i in range(10000): <span>#训练次数</span>
+            batch = 50  <span>#分批训练,每批的数量</span>
+            Accuracy_sum = 0 <span>#每批的正确率之和</span>
+            <span>#创建迭代器</span>
+            g_che = <a href='./Check_train_result.html'>Check_train_result</a>()
+            next(g_che)
+            for j in range(len(train_images)//batch):                
+                <span>#print('输出矩阵:', sess.run(output_data, feed_dict={input_data:train_images[j*batch:(j+1)*batch], lables:train_lables[j*batch:(j+1)*batch], keep_prob:0.5}))  </span>
+                loss = sess.run(cross_entropy, feed_dict={input_data:train_images[j*batch:(j+1)*batch], lables:train_lables[j*batch:(j+1)*batch], keep_prob:0.5})
+                print('loss:', loss)  
+                Accuracy_sum =sess.run(output_data, feed_dict={input_data:train_images[j*batch:(j+1)*batch], lables:train_lables[j*batch:(j+1)*batch], keep_prob:0.5})
+                g_che.send((Accuracy_sum,train_lables[j*batch:(j+1)*batch],0))<span>#统计                </span>
+                sess.run(train_step, feed_dict={input_data:train_images[j*batch:(j+1)*batch], lables:train_lables[j*batch:(j+1)*batch], keep_prob:0.5}) <span>#训练</span>
+            <span>#print('第',i+1,'次训练的平均正确率:', Accuracy_sum/(len(train_images)//batch)) #打印正确率           </span>
+            loss = sess.run(cross_entropy, feed_dict={input_data:train_images, lables:train_lables, keep_prob:0.5})
+            if i>5:
+                data_X.append(i)
+                data_Y.append(loss*100)
+                data_Y1.append(g_che.send((0,0,-1))[0])
+                data_Y2.append(g_che.send((0,0,-1))[1])
+                g.send([data_X,data_Y,data_Y1,data_Y2])
+            if(i%500 == 0 and i!=0): <span>#每训练500次保存一次模型</span>
+                save_model_name='./models/model_'+str(int(time.time()))+'_'+str(int(loss*10000))<span>#模型名</span>
+                <a href='./Save_model_PB.html'>Save_model_PB</a>(sess, save_model_name+'.pb')<span>#保存为pb格式</span>
+                print('保存为pb格式：'+save_model_name+'.pb')
+                tf.train.Saver().save(sess, save_model_name+'.ckpt')<span>#保存为ckpt格式</span>
+                print('保存为ckpt格式：'+save_model_name+'.ckpt')
+        g.send('over')
+</pre>
+</body>
+</html>

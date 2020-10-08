@@ -1,0 +1,44 @@
+<html>
+<head></head>
+<link href="../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+Python 学习 字符串操作: <a href='https://www.w3school.com.cn/python/python_ref_string.asp'>一些常用的字符串函数</a>
+	搜索指定字符串:
+		str = 'abcdc'
+		index = str.find('c', beg=0, end=len(str)) <span>#搜索到了则返回搜索的字符串的第一个字符在被搜索的字符串的索引位置,这里是2,没搜索到则返回-1</span>
+		index = str.rfind('c', beg=0, end=len(str)) <span>#类似find()只不过从右边开始搜索,这里返回的结果是4</span>
+	删除字符串开头或末尾的指定字符:
+		str = 'abcdc'
+		new_str = str.lstrip('a') <span>#new_str=='bcdc';该函数删除的字符数不是1</span>
+		new_str = str.rstrip('c') <span>#new_str=='abcd';该函数删除的字符数不是1</span>
+		new_str = str.strip() <span>#该函数删除字符串开头和结尾的空白字符</span>
+	替换字符串中指定的字符串:
+		str = 'abcdc'
+		new_str = str.replace('c', 'cc', max=2) <span>#替换字符c为cc,max是替换的最大次数</span>
+		print(new_str) <span>#打印:abccdcc</span>
+	向字符串指定位置插入字符串:
+		先将字符串转化为list,利用.insert(index, object)函数在index索引处插入对象,后面的字符自动往后挪,然后再转化为字符串:
+			str = 'abcd'
+			str_list = list(str)
+			str_list.insert(1, 'kk')
+			str = ''.join(str_list)
+			print(str) <span>#打印:akkbcd</span>
+	返回大小写的字符串:
+		返回小写字符串:
+			str = 'AbcdC'
+			new_str = str.lower() <span>#返回小写的字符串</span>
+			print(new_str) <span>#打印:abcdc</span>
+		返回大写字符串:
+			str = 'AbcdC'
+			new_str = str.upper() <span>#同上</span>
+	返回字符串中指定的字符串:
+		①确定需要的字符串所在的位置,包含开始和结束或者长度
+			可以利用.find()函数搜索指定字符串的位置
+		②截取字符串: str[start, end, step]
+</pre>
+</body>
+</html>

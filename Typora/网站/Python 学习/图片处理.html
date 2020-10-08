@@ -1,0 +1,35 @@
+<html>
+<head></head>
+<link href="../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<pre>
+Python 学习 图片处理
+	读取图片:
+		cv2.imread(image_path) 读取图片,返回shape=(height,width,通道数)的<a href='./numpy数组.html'>numpy数组</a>
+		图片路径: 不可以有中文
+			相对路径 相对于程序文件的路径 ./指本目录 ../指上一级目录
+			绝对路径(物理路径) 文件最完整的路径,从磁盘根目录开始,目录分隔符使用'\\'or'/'
+		通过摄像头读取图片：
+			<a href='./函数详情/Open_camera.html'>camera()</a>
+	查看图片信息:
+		numpy.shape(array) or array.shape 返回数组的shape元组
+		展示图片:
+			cv2.imshow(string_windowsName,image_array) <span>#打开一个名string_windowsName的窗口展示图片image_array,但是通常会一闪而逝,所以我们加上下面一句</span>
+				if cv2.waitKey(): <span>#等待键盘输入</span>
+					cv2.destroyAllWindows() <span>#关闭所有窗口</span>
+	对图片的处理:
+		截取 [:,...] 对各个维度上进行截取,对截取的部分可读可写,使用逗号分隔维度,冒号分隔截取范围,例如:
+			array.shape == (100,100,3)
+			array[:] == array[:,:] == array[:,:,:] == array[0:,:,:] == array[:100,:,:] ==(100,100,3) 未指明的就照常
+			array[:,2:4,:] == (100,2,3)
+		改变图片的形状: 
+			numpy.reshape(array,reshape元组) or array.reshape(reshape元组) reshape元组中的总元素个数定等同array元素数
+		图片像素相加: 俩图片shape等同
+			cv2.add(image_array1,image_array2) <span>#将图片image_array1与图片image_array2相对应的像素值相加,返回新的图片,像素值封顶255,</span>
+		图片预处理：<a href='./函数详情/图像预处理.html'>几种常用的处理方式</a>
+	
+	导出图片: <span class='note'>中文禁止，还要注意处理后的图片数据类型一般会发生改变，需要改回图片应有的类型，例如np.uint8</span>
+		cv2.imwrite(save_path_name,image_array) <span>#将图片image_array保存到save_path_name</span>
+</pre>
+</body>
+</html>

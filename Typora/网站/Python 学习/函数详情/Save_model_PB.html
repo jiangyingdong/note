@@ -1,0 +1,25 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+from tensorflow.python.framework import graph_util
+def Save_model_PB(sess, save_model_name='file_name.pb', nodes=['input_data', 'output_data', 'keep_prob', 'lables']):
+	<span>#sess: 当前工作的session</span>
+	<span>#save_model_name: 保存模型使用的文件名</span>
+	<span>#nodes: 模型固定的节点;如果有多个输出节点，以逗号隔开</span>
+	
+	<span>#保存模型为pb模型</span>
+	output_graph_def = graph_util.convert_variables_to_constants(
+		sess=sess,
+		input_graph_def=sess.graph_def, <span>#等于:sess.graph_def</span>
+		output_node_names=nodes 
+	)<span># 模型持久化，将变量值固定,</span>
+	with tf.gfile.GFile(save_model_name, "wb") as f: <span>#保存模型</span>
+		f.write(output_graph_def.SerializeToString()) <span>#序列化输出</span>
+</pre>
+</body>
+</html>

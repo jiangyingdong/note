@@ -1,0 +1,48 @@
+<html>
+<head></head>
+<link href="../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+Python 学习 numpy数组
+	常用的创建初始化数组的函数:
+		numpy.array() <span>#将list or tuple 转化为数组</span>
+		numpy.arange(0,7,1,dtype=numpy.int16) <span># 0为起点，间隔为1时可缺省(引起歧义下不可缺省)</span>
+		numpy.ones((2,3,4),dtype=numpy.int16) <span># 2页，3行，4列，全1，指定数据类型</span>
+		numpy.zeros((2,3,4)) <span># 2页，3行，4列，全0</span>
+		numpy.empty((2,3)) <span>#值取决于内存</span>
+		numpy.arange(0,10,2) <span># 起点为0，不超过10，步长为2</span>
+		numpy.linspace(-1,2,5) <span># 起点为-1，终点为2，取5个点</span>
+		numpy.random.randint(0,3,(2,3)) <span># 大于等于0，小于3，2行3列的随机整数</span>
+		
+	乱序:
+		使用random.shuffle(list)函数:
+			若是打乱数组第一个维度的顺序,可以将数组转化为list,然后打乱,再转回array:
+				list1 = list(numpy.ones((3,4)))
+				random.shuffle(list1)
+				array = numpy.array(list1)
+			若是有目标的打乱则可以使用循环:
+				list2 = list3 = list(range(10,20)) <span>#目标是以相同的顺序打乱这两个list</span>
+				list1 = list(range(len(list2)))
+				random.shuffle(list1)
+				print(list1)
+				new_list2 = list()
+				new_list3 = list()
+				for i in list1:
+					new_list2.append(list2[i])
+					new_list3.append(list3[i])
+				print(new_list2,new_list3)
+				
+	拼接数组:
+		使用 numpy.stack()函数 or numpy.concatenate() 函数
+	
+	求平均值:使用<a href='https://blog.csdn.net/weixin_36149892/article/details/86659689'>np.average(array, axis)</a>函数
+	
+	转换数组元素的数据类型：使用.astype()函数
+	
+	数组的运算：<a href='https://blog.csdn.net/liyuqian199695/article/details/53863173?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase'>连接</a>
+</pre>
+</body>
+</html>

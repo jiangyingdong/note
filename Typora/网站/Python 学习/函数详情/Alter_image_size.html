@@ -1,0 +1,29 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+def Alter_image_size(image, target_size):
+    <span>#warning: 改变图像尺寸    </span>
+    <span>#param image: 需要改变尺寸的图像</span>
+    <span>#param target_size: 目标尺寸大小，是个列表    </span>
+    <span>#return: image_paded: 新图片，尺寸是target_size</span>
+    
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)<span>#shape=[?,?,3]</span>
+    ih, iw    = target_size <span>#将image图片尺寸改变至target_size</span>
+    h,  w, _  = image.shape
+    scale = min(iw/w, ih/h)
+    nw, nh  = int(scale * w), int(scale * h)
+    image_resized = cv2.resize(image, (nw, nh)) <span>#改变image图片的尺寸，image_resized 是新图片</span>
+    image_paded = np.full(shape=[ih, iw, 3], fill_value=128.0)
+    dw, dh = (iw - nw) // 2, (ih-nh) // 2
+    image_paded[dh:nh+dh, dw:nw+dw, :] = image_resized
+    image_paded = image_paded / 255.
+    
+    return image_paded
+</pre>
+</body>
+</html>

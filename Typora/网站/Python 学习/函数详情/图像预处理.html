@@ -1,0 +1,46 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+	import numpy as np
+	import cv2
+	import time
+	<span>#图像预处理</span>
+	start = time.time()
+	<span>#img = np.average(img,axis=2).astype(np.uint8) #均值化，求3色彩通道的平均值</span>
+	<span>#img = np.max(img,axis=2).astype(np.uint8) #最大值法，求3色彩通道的最大值</span>
+	<span>#img = np.min(img,axis=2).astype(np.uint8) #最小值法，求3色彩通道的最小值</span>
+	<span>#img = np.average(img * np.array([1, 0, 0])).astype(np.uint8) #加权平均法，BGR，对3色彩通道进行加权平均</span>
+	end = time.time()
+	print('处理一张图片用时{}s'.format(end-start))
+	
+	#对图像进行卷积，根据不同的内核能做到许多效果：模糊，锐化，轮廓或浮雕；函数<a href='https://www.cnblogs.com/lfri/p/10599420.html'>cv2.filter2D()</a>
+	def Pretreatment(img, mod=0):
+		#img: 需处理的图片
+		if mod == 0: #模糊
+			kernel = np.array((
+				[0.0625, 0.125, 0.0625],
+				[0.125, 0.25, 0.125],
+				[0.0625, 0.125, 0.0625]), dtype="float32") #卷积核
+			return cv2.filter2D(img, -1, kernel)
+			
+		if mod == 1: #边缘检测
+			kernel = np.array((
+				[0, 1, 0],
+				[1, -4, 1],
+				[0, 1, 0]), dtype="float32") #卷积核,拉普拉斯算子（laplacian operator）
+			return cv2.filter2D(img, -1, kernel)
+			
+		if mod == 2: #大纲（outline）
+			kernel = np.array((
+				[-1, -1, -1],
+				[-1, 8, -1],
+				[-1, -1, -1]), dtype="float32") #卷积核
+			return cv2.filter2D(img, -1, kernel)
+</pre>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+	def use_plt_show_data():	
+		<span>#这是个迭代器，使用时使用.send()函数传入数据</span>
+		plt.ion()<span>#开启交互模式</span>
+		fig = plt.<a href='./figure.html'>figure(figsize=(16,8), dpi=100)</a><span>#获取画布</span>
+		ax1 = fig.add_subplot(1,2,1)<span>#创建子图1</span>
+		ax2 = fig.add_subplot(1,2,2)<span>#创建子图2</span>
+		while 1:
+			data = yield
+			if(data=='over'):
+				break
+			ax1.cla() <span>#清除子图的图像</span>
+			ax1.grid(color='r', linestyle='--', linewidth=1,alpha=0.3)<span>#添加网格线</span>
+			ax1.set_title('Title')<span>#标题</span>
+			ax1.Xlabel('XAxis')<span>#X轴名称</span>
+			ax1.Ylabel('YAxis')<span>#Y轴名称</span>
+			ax1.plot(data[0],data[1], label = 'loss')<span>#绘出折线图</span>
+			ax1.legend()<span>#显示标签</span>
+			ax2.cla() <span>#清除子图的图像</span>
+			ax2.grid(color='r', linestyle='--', linewidth=1,alpha=0.3)<span>#添加网格线</span>
+			ax2.plot(data[0],data[2], label = 'avg')
+			ax2.legend()
+			plt.draw() <span>#交互模式下重新绘制图像</span>
+			plt.pause(0.1) <span>#保持显示</span>
+		plt.ioff()<span>#关闭交互模式</span>
+		plt.show()<span>#显示图像</span>
+		
+	使用示例：
+		g = use_plt_show_data()<span>#创建迭代器</span>
+		next(g)
+		X = list()
+		Y1 = list()
+		Y2 = list()
+		for i range(100):
+			X.append(i)
+			Y1.append(i*i+3*i+1)
+			Y2.append(i*i*i)
+			g.send([X,Y1,Y2])
+		g.send('over')<span>#结束</span>
+</pre>
+</body>
+</html>

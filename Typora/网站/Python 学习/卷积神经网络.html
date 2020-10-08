@@ -1,0 +1,59 @@
+<html>
+<head></head>
+<link href="../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+Python 学习 卷积神经网络
+	读取数据集：
+		①读取数据集所在文件夹的所有文件，利用<a href='./函数详情/folder_to_dict.html'>folder_to_dict(folder_path)</a>函数
+		②乱序并构建符合网络要求的归一化后的数据集:
+			<a href='./函数详情/Build_datasets.html'>Build_datasets(dict_data_folder, target_image_size=[224, 224])</a>
+			
+	将模型保存为PB格式:<span class='note'>不易恢复整个网络，而且计算特别慢</span>
+		①固定关键节点: 比如输入、输出节点
+		②保存文件
+			<a href='./函数详情/Save_model_PB.html'>Save_model_PB(sess, save_model_name='file_name.pb', nodes=['input_data', 'output_data', 'keep_prob', 'lables'])</a>函数
+		③读取PB文件,并预测图片
+			<a href='./函数详情/Predict_by_PB.html'>Predict_by_PB( image_path_name)</a>函数
+	
+	将模型保存为ckpt格式:<span class='note'>易恢复整个网络，方便迁移训练，计算快</span>
+		①<a href='https://blog.csdn.net/loveliuzz/article/details/81661875?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-4'>保存模型为ckpt并恢复模型用于检测或者迁移训练</a>
+		②迁移训练：
+			准备：①数据集文件路径；②ckpt文件路径；③<a href='./函数详情/Transfer_training.html'>Transfer_training(ckpt_file_path='./models/model_1594287957_6687.ckpt', datasetts=r'C:\Users\jyd\Desktop\data')</a>
+	分批训练:
+		frequency_of_training = 10 <span>#训练次数</span>
+		batch_of_training = 50 <span>#分批训练每批的数量</span>
+		with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())<span>#初始化变量</span>
+			for i in range(frequency_of_training):
+				for j in range( len(data_sets[0]) // batch_of_training + 1 ): <span>#data_sets[0]是训练的图片集[1]是训练的标签集</span>
+					<span>#训练;train_step是训练步骤;lables是标签集张量;input_data是图片集张量</span>
+					sess.run(train_step, feed_dict={input_data:data_sets[0][j*batch_of_training:(j+1)*batch_of_training], lables:data_sets[1][j*batch_of_training:(j+1)*batch_of_training]}) 
+					
+	利用网络输出结果比较标签集来判断正确率： <a href='https://blog.csdn.net/u012300744/article/details/81240580'>tf.argmax()</a>、<a href='https://blog.csdn.net/ustbbsy/article/details/79564529'>tf.equal()</a>、<a href='https://blog.csdn.net/dcrmg/article/details/79747814'>tf.cast()</a>、<a href='https://blog.csdn.net/dcrmg/article/details/79797826'>tf.reduce_mean()</a>
+		①通常的正确率
+			①判定当前输出结果指向哪一个类别
+			②与标签（正确答案）对比
+			③计算这一批的正确率
+			例如: 本批5张图片，类别2个；输出结果result是[[0.2,0.8],[0.8,0.2],[0.5,0.5],[0.4,0.6],[0.1,0.9]];标签集lables是[[0,1],[0,1],[1,0],[1,0],[0,1]]
+				correct_prediction = tf.equal(tf.argmax(result,1), tf.argmax(lables,1))	<span>#.equal()判断对应的元素是否相等，返回true或者false；.argmax()返回指定维度上最大值的索引,若相等则取前面的；correct_prediction为[true,false,false,false,true]</span>
+				accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))	<span>#.cast()转换张量的数据类型；.reduce_mean()求平均值，默认求所有元素的平均值；accuracy为2/5=0.4</span>
+		②召回率 or 精确率（二分类）
+			①召回率recall：确定目标类别；在目标类别出现时，成功预测到的概率
+			②精确率precision：在预测目标类别出现时，预测成功的概率
+			<span>#产生测试数据</span>
+			output_data = [[0,1],[1,0],[1,0],[1,0]]
+			labels = [[1,0],[1,0],[0,1],[1,0]]
+			<span>#创建迭代器</span>
+			g = <a href='./函数详情/Check_train_result.html'>Check_train_result()</a>
+			next(g)
+			<span>#统计</span>
+			g.send((output_data,labels,0))
+			<span>#计算</span>
+			print(g.send((0,0,-1)))
+</pre>
+</body>
+</html>

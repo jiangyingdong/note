@@ -1,0 +1,47 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+	import numpy as np
+	import os
+	import cv2
+	def Build_datasets(dict_data_folder, target_image_size=[224, 224]):
+		<span>#dict_data_folder: 利用<a href='./folder_to_dict.html'>folder_to_dict(folder_path)</a>函数得到的字典，该文件目录只有3层</span>
+		<span>#target_image_size: 网络的输入图片尺寸</span>
+		<span>#返回(train_images, train_lables, test_images, test_lables)元组，都是list(array())格式</span>
+		dict_data = dict()
+		for k1,v1 in dict_data_folder.items():
+			if (k1 != 'list_file') and (k1 != 'path'):
+				dict_data[k1] = list()    <span>#用于存放训练或测试数据的list</span>
+				count_class = len(v1) - 2 <span>#类别的数量，v1除了类别字段还有path和list_file字段，所以-2</span>
+				to_class = 0 <span>#指向第一个类别</span>
+				for k2,v2 in v1.items(): <span>#遍历每个类别</span>
+					if k2 != 'list_file' and k2 != 'path':
+						lable_array = np.zeros((count_class,)) <span>#类别标签</span>
+						to_class = to_class + 1 <span>#指向下一个类别</span>
+						for x in v2['list_file']: <span>#遍历图片</span>
+							lable_array[to_class-1]=1 <span>#把当前类别置1                        </span>
+							dict_data[k1].append([x,lable_array]) <span>#向数据集list中添加[图片路径, 对应的标签]</span>
+				np.random.shuffle(dict_data[k1]) <span>#乱序</span>
+		<span>#print(dict_data)</span>#{key:list(list(str,array)), key:list(list(str,array))}格式的字典，str是图片路径，array是对应的标签
+		train_images = list()
+		train_lables = list()
+		test_images = list()
+		test_lables = list()
+		for k,v in dict_data.items():
+			if k.lower().find('train') != -1:
+				for x in v:
+					train_images.append(Alter_image_size(cv2.imread(x[0]), target_image_size)/255)<span>#读取图片并归一化和改变尺寸,<a href='./函数详情/Alter_image_size.html'>Alter_image_size(image, target_size)</a>函数用来改变图片尺寸</span>
+					train_lables.append(x[1])
+			if k.lower().find('test') != -1:
+				for x in v:
+					test_images.append(Alter_image_size(cv2.imread(x[0]), target_image_size)/255)<span>#读取图片并归一化和改变尺寸</span>
+					test_lables.append(x[1])
+		return(train_images, train_lables, test_images, test_lables)
+</pre>
+</body>
+</html>

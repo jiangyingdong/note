@@ -1,0 +1,30 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+	import cv2
+	
+	def camera(iamge_save_path='./'):
+		<span>#iamge_save_path: 截取的图片保存的路径，图片名程序自定义</span>
+		winName = "img"  <span>#窗口名</span>
+		cv2.namedWindow(winName,2)    <span>#创建可改变窗口</span>
+		cap = cv2.VideoCapture(0) <span>#调用笔记本内置摄像头，所以参数为0，如果有其他的摄像头可以调整参数为1，2</span>
+		while cap.isOpened():
+			success,img = cap.read()<span>#从摄像头读取图片</span>
+			if success:
+				cv2.imshow(winName,img)   <span>#打开图片</span>
+			k = cv2.waitKey(1) <span>#保持画面持续</span>
+			if k == 27: <span>#按Esc键退出</span>
+				cv2.destroyAllWindows()
+				cap.release()<span>#关闭摄像头</span>
+			elif k == ord('s'): <span>#按s键截图并保存</span>
+				image_name = 'image'+str(int(time.time()))+'.jpg'
+				cv2.imwrite(os.path.join(iamge_save_path,image_name),img)
+				print('保存图片:',image_name,'至:',iamge_save_path)
+</pre>
+</body>
+</html>

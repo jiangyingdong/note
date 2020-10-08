@@ -1,0 +1,42 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+def Check_train_result():
+    target_class = 0            <span>#目标类别出现的次数</span>
+    predict_target_class = 0     <span>#预测目标类别的次数</span>
+    predict_target_success = 0    <span>#预测目标类别正确的次数</span>
+    pt = 0 <span>#召回率</span>
+    pp = 0 <span>#精确率</span>
+    <span>#Net_out: 网络输出结果</span>
+    <span>#labels: 对应的标签集</span>
+    <span>#index: 目标类别的索引,-1为计算过程</span>
+    while 1:
+        Net_out, labels, index = yield pt,pp
+        if index != -1:    <span>#传入非(0,0,*)统计</span>
+            for i in range(len(labels)):<span>#统计</span>
+                if labels[i][index]==1:
+                    target_class+=1
+                    if Net_out[i][index]>0.5:
+                        predict_target_success+=1
+                if Net_out[i][index]>0.5:
+                    predict_target_class+=1
+        if index == -1:    <span>#传入(0,0,*)返回结果</span>
+            if target_class!=0 and predict_target_class!=0:    <span>#防止除以0的情况</span>
+                pt = predict_target_success/target_class
+                pp = predict_target_success/predict_target_class
+            else:
+                if target_class==0 and predict_target_class==0:
+                    pt = 1
+                    pp = 1
+                else:
+                    pt = 0
+                    pp = 0
+<span>#这是一个迭代器，传入(*,*,-1)时返回召回率和精确率，传入需统计的数据进行统计：</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,16 @@
+body{/*设置字体无效*/
+	font-size:20px; 
+}
+pre{
+	font-family:"serif"; /*设置字体*/
+}
+span{
+	font-size:14px; color:green;
+}
+a{
+	text-decoration:none; /*取消下划线*/
+	color:blue;
+}
+.note{
+	font-size:10px; color:#ff0000;
+}

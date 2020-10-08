@@ -1,0 +1,83 @@
+<html>
+<head></head>
+<link href="../../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import numpy as np
+import random
+import cv2
+import os
+import time
+class CNN(object):
+    <span>#该类是用于加载pb模型，然后对摄像头获取的图片进行预测，若为正样本则返回True</span>
+    <span>#使用示例见最后的类方法CNN.exemple()</span>
+    
+    def __init__(self, ckpt_file_path, return_elements=['input_data:0', 'keep_prob:0', 'output_data:0']):
+        self.sess = tf.Session()
+        <span>#加载网络图,.meta文件</span>
+        saver = tf.compat.v1.train.import_meta_graph(ckpt_file_path+'.meta')
+        <span>#加载参数</span>
+        saver.restore(self.sess, ckpt_file_path)
+        <span>#通过变量名获取关键变量</span>
+        graph = tf.compat.v1.get_default_graph()
+        self.output_data = graph.get_tensor_by_name('output_data:0')
+        self.input_data = graph.get_tensor_by_name('input_data:0')
+        self.keep_prob = graph.get_tensor_by_name('keep_prob:0')
+    
+    def Predict_by_Ckpt(self, image):
+        <span>#利用模型文件对给定的照片进行预测(二分类),正样本则返回True</span>
+        <span>#image: 要预测的图片</span>
+        image = self.Alter_image_size(image, [224, 224])/255 <span>#改变图片的大小,使其符合网络的要求</span>
+        image = image.reshape(1,224,224,3)
+        pre = self.sess.run(self.output_data, feed_dict = {self.input_data: image, self.keep_prob:0.5}) <span>#预测</span>
+        if pre[0][0]>0.5:
+            return True
+        else: return False
+    def Alter_image_size(self, image, target_size):
+        '''
+        @warning: 改变图像尺寸
+        
+        @param image: 需要改变尺寸的图像
+        @param target_size: 目标尺寸大小，是个列表
+        
+        @return: image_paded: 新图片，尺寸是target_size
+        '''    
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)<span>#shape=[?,?,3]</span>
+    
+        ih, iw    = target_size <span>#将image图片尺寸改变至target_size</span>
+        h,  w, _  = image.shape
+    
+        scale = min(iw/w, ih/h)
+        nw, nh  = int(scale * w), int(scale * h)
+        image_resized = cv2.resize(image, (nw, nh)) <span>#改变image图片的尺寸，image_resized 是新图片</span>
+    
+        image_paded = np.full(shape=[ih, iw, 3], fill_value=128.0)
+        dw, dh = (iw - nw) // 2, (ih-nh) // 2
+        image_paded[dh:nh+dh, dw:nw+dw, :] = image_resized
+        image_paded = image_paded / 255.
+        
+        return image_paded
+    
+    @classmethod
+    def exemple(cls):
+        c = CNN(r'C:\Users\jyd\eclipse-workspace\PyShuMeiPai\src\Tensorflow_AlexNet\models\model_1594369948_6285.ckpt') <span>#通过指定的pb文件路径创建对象</span>
+        cap = cv2.VideoCapture(0) <span>#打开摄像头</span>
+        while cap.isOpened():
+            im = cap.read() <span>#读取一帧图像，返回一个tuple,第一个元素是bool型，表示是否读取成功，第二个元素是读取的图像</span>
+            <span>#print(type(im),im) #打印观察数据类型</span>
+            if im[0]:
+                start = time.time()
+                print(c.Predict_by_Ckpt(im[1])) <span>#使用CNN对象的Predict_by_PB(image)函数进行预测</span>
+                end = time.time()
+                print('预测一张图片的用时:{}s'.format(end-start))
+            <span>#break</span>
+        
+<span>#CNN.exemple()</span>
+</pre>
+</body>
+</html>

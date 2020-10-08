@@ -1,0 +1,47 @@
+## 查看端口情况
+
+1. 查看指定端口 9000端口的情况
+
+   ```
+   netstat -anp|grep 9000
+   ```
+
+## 防火墙
+
+1. **查看已经开放的端口：**
+```powershell
+firewall-cmd --list-ports
+```
+2. **开启端口**
+
+```powershell
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+```
+
+> 命令含义： 
+> –zone 	   #作用域 
+> –add-port=80/tcp 	#添加端口，格式为：端口/通讯协议 
+> –permanent #永久生效，没有此参数重启后失效
+3. **关闭一个端口**
+
+```powershell
+firewall-cmd --zone= public --remove-port=80/tcp --permanent
+```
+
+4. **重启防火墙**
+
+```powershell
+firewall-cmd --reload #重启firewall
+systemctl stop firewalld.service #停止firewall
+systemctl disable firewalld.service #禁止firewall开机启动
+```
+5. **查看默认防火墙状态**
+
+```powershell
+firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）
+```
+
+## 文件
+### 重命名
+
+> mv 当前文件名 新的文件名

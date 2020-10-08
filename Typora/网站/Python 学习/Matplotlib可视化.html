@@ -1,0 +1,30 @@
+<html>
+<head></head>
+<link href="../样式/CSS/Python 学习.css" rel="stylesheet" type="text/css" />
+<body>
+<!-- 注释: --><span></span>
+<!-- 超链接: --><a href='./函数详情/*.html'></a>
+<!-- 提示: --><span class='note'></span>
+<pre>
+Python 学习 Matplotlib可视化 <a href='https://zhuanlan.zhihu.com/p/139052035'>教程</a>
+	①基本使用：
+		import matplotlib.pyplot as plt
+		plt.title('Title')  <span>#标题</span>
+		plt.xlabel('Xaxis') <span>#X轴名称</span>
+		plt.ylabel('Yaxis') <span>#Y轴名称</span>
+		plt.plot([1,2,3,4,5], [1,2,3,4,5], label='label1')<span>#添加数据，参数分别是X轴数据，Y轴数据，名称</span>
+		plt.pause(0.5) 	<span>#暂停0.5s，多少都要暂停一下不然没有图像</span>
+		plt.legend()    <span>#显示图像的名称</span>
+		plt.show()      <span>#显示图像</span>
+	②划分子图显示： <a href='https://blog.csdn.net/m0_37362454/article/details/81511427'>教程</a>
+		fig = plt.figure()<span>#创建画布,<a href='./函数详情/figure.html'>figure()</a>函数</span>
+		ax1 = fig.add_subplot(2,2,1)<span>#向画布中添加子图，221代表2行2列第一个子图</span>
+		ax1.grid(color='r', linestyle='--', linewidth=1,alpha=0.3)<span>#添加网格线</span>
+		ax1.plot([1,2,3,4],[1,2,3,4])<span>#填入数据</span>
+		plt.show()
+	③动态显示图像：
+		<a href='./函数详情/use_plt_show_data.html'>use_plt_show_data()</a>函数
+		这个是个迭代器，使用稍微复杂些，在迭代过程中将历史数据传入迭代器中
+</pre>
+</body>
+</html>
