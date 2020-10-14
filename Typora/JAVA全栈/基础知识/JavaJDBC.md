@@ -1,7 +1,17 @@
 - 需要：数据库，数据库连接驱动
 - 连接数据库：
   - 调用Class类方法**forName(String 驱动名)**来加载驱动
+  
   - 调用DriverManager类方法**getConnection(String 连接串,String 用户,String 密码)**来获取数据库连接类Connection对象，每次用完需要调用对象方法**close**来释放资源
+  
+    - 常用连接串：
+  
+      ```xml
+      jdbc:mysql://localhost:3306/数据库名?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
+      ```
+  
   - 使用Connection对象调用对象方法**prepareStatement(String sql语句)**来获取PreparedStatement数据库操作类对象，同上，用完关闭
+  
   - 使用PreparedStatement对象方法execute来执行先前传入的sql语句，或者使用executeQuery方法用来查询数据库，返回一个ResultSet对象
+  
   - 使用ResultSet对象方法next来遍历每条记录，结束返回false；使用getxxx方法根据字段位置来获取每个字段的值，起始位置是1，同上，用完关闭
