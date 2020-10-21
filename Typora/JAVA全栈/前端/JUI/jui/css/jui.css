@@ -1,0 +1,104 @@
+* {
+	margin: 0px;
+	padding: 0px 0px 0px 0px;
+}
+.jui-inside-horizontal {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.jui-outside-horizontal {
+	display: inline-block;
+}
+
+.jui-div-shadown {
+	box-shadow: 3px 3px 5px #b4b4b4;
+}
+
+.jui-div-radius {
+	border-radius: 4px;
+}
+
+.jui-outside-center {
+	margin: auto;
+}
+
+/************************************************************************************************************************************************
+ *  布局UI
+ */
+html,body{height: 100%;}body {background: #ffffff;background-size: 100%;}.jui-body {height: 100%;display: flex;flex-wrap: wrap;}.jui-body-top {width: 100%;height: 60px;position: fixed;margin-top: 0px;}.jui-body-middle {width: 100%;height: auto;margin: 0px 0px auto 0px;padding-top: 60px;display: flex;flex-wrap: wrap;}.jui-body-bottom {width: 100%;height: fit-content;margin: auto 0px 0px 0px;}.jui-body-middle-left {margin: 5px 0px 5px auto;}.jui-body-middle-middle {margin: 5px;padding: 0px 0px 0px 0px;background: rgba(239, 239, 239, 0.3);}.jui-body-middle-right {margin: 5px auto 5px 0px;}
+.jui-row{
+	margin: 0px auto 8px auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/************************************************************************************************************************************************
+ *  登录表单UI 
+ */
+.jui-login-div {width: 480px;box-shadow: 6px 6px 15px #b4b4b4;background-color: #FFFFFF;border-radius: 5px;padding: 10% 7%;font-family: "宋体";font-size: 20px;}.jui-login-div form {}.jui-login-div form div {margin-bottom: 5%;display: flex;flex-wrap: wrap;}.jui-login-div form div label {text-align: center;width: 20%;}.jui-login-div form div input {width: 50%;}.jui-login-div form div div {margin: auto;}.jui-login-div form div div span {font-size: 10px;color: #FF0000;}.jui-login-div form div div button {width: 70px;height: 50px;margin: 0px 10px;border-radius: 10px;border: 0px;background-color: #feff98;box-shadow: 4px 4px 7px #b4b4b4;}
+
+/*************************************************************************************************************************************************
+ * 表格
+ */
+.jui-table-div table{
+	border: 0px;
+	border-radius: 10px;
+	font-size: 20px;
+	text-align: center;
+	box-shadow: 3px 3px 5px #b4b4b4;
+}
+
+/*************************************************************************************************************************************************
+ * 按钮
+ */
+.jui-btn {
+	margin-right: 2px;
+	display: inline-block;
+	font-weight: 400;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+}
+.jui-btn:hover {
+	opacity: .8;
+	filter: alpha(opacity=80);
+	color: #fff
+}
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-dark{
+	color: #fff;
+	background-color: #343a40;
+	border-color: #343a40;
+}
+/*************************************************************************************************************************************************
+ * 动画
+ */
+.jui-div-animation-1-100px {position: fixed;z-index: -1;animation: name 20s;-o-animation: name 20s;-webkit-animation: name 20s;-moz-animation: name 20s;animation-iteration-count: infinite;animation-timing-function: linear;}.jui-div-animation-1-100px * {width: 100px;height: 100px;}
+
+@keyframes name {0% {top: calc(50% - 50px);left: 0px;}25% {top: calc(100% - 100px);left: calc(50% - 50px);}50% {top: calc(50% - 50px);left: calc(100% - 100px);}75% {top: 0px;left: calc(50% - 50px);}100% {top: calc(50% - 50px);left: 0px;}}@-moz-keyframes name {0% {top: -moz-calc(50% - 50px);left: 0px;}25% {top: -moz-calc(100% - 100px);left: -moz-calc(50% - 50px);}50% {top: -moz-calc(50% - 50px);left: -moz-calc(100% - 100px);}75% {top: 0px;left: -moz-calc(50% - 50px);}100% {top: -moz-calc(50% - 50px);left: 0px;}}@-webkit-keyframes name {0% {top: -webkit-calc(50% - 50px);left: 0px;}25% {top: -webkit-calc(100% - 100px);left: -webkit-calc(50% - 50px);}50% {top: -webkit-calc(50% - 50px);left: -webkit-calc(100% - 100px);}75% {top: 0px;left: -webkit-calc(50% - 50px);}100% {top: -webkit-calc(50% - 50px);left: 0px;}}@-o-keyframes name {0% {top: calc(50% - 50px);left: 0px;}25% {top: calc(100% - 100px);left: calc(50% - 50px);}50% {top: calc(50% - 50px);left: calc(100% - 100px);}75% {top: 0px;left: calc(50% - 50px);}100% {top: calc(50% - 50px);left: 0px;}}
+
+
+/*************************************************************************************************************************************************
+ * 测试用div
+ */
+.jui-test-div {padding: 0px;height: 100%;background-color: rgba(100, 0, 0, 0.5);font-size: 30px;color: #FFFFFF;text-align: center;}.jui-test-div-1 {margin: auto;padding-top: 400px;height: 300px;width: 100%;background-color: rgba(0, 0, 0, 0.5);font-size: 30px;color: #FFFFFF;text-align: center;position: absolute;}
