@@ -48,16 +48,63 @@
 </div>		
 ```
 
-## 居中
+## 对齐方式
+
+![image-20201022104050239](image-20201022104050239.png)
 
 ```html
 <div class="jui-inside-horizontal">
+    <div class="jui-outside-left">
+        <div class="jui-test-div">左对齐</div>
+    </div>
     <div class="jui-outside-center">
-        这里是居中的内容，只有行类元素才有效果，例如button，p等等
+        <div class="jui-test-div">居中</div>             
+    </div>
+    <div class="jui-outside-right">
+        <div class="jui-test-div">右对齐</div>    
     </div>
 </div>
 ```
 
+## 导航
+
+### 顶部导航
+
+![image-20201022104651685](image-20201022104651685.png)
+
+```html
+<div class="jui-inside-horizontal">
+    <div class="jui-outside-center">
+        <ul class="jui-ul-navbar" style="width: 1400px;">
+            <div class="jui-outside-left jui-inside-horizontal">
+                <li><a href="login.jsp">首页</a></li>
+            </div>
+            <div class="jui-outside-right jui-inside-horizontal">
+                <li><a href="login.jsp">登录</a></li>
+                <li><a href="login.jsp">注册</a></li>
+            </div>
+        </ul>
+    </div>
+</div>
+```
+## input标签
+
+### 搜索
+
+![image-20201021204116990](image-20201021204116990.png)
+
+```html
+<!--jui.search(this,跳转的参数名,跳转的路由,event)；回车跳转-->
+<input class="jui-input-search" type="text" placeholder="搜索..." onkeydown="jui.search(this,'search','index.html',event)"/>
+```
+### 日期选择
+
+![image-20201022101332203](image-20201022101332203.png)
+
+```html
+<!--jui.dateSelect(id),设置默认日期为今天-->
+<input class="jui-input-search" type="date" name="" id="dateSlect"/><script>jui.dateSelect('dateSlect')</script>
+```
 ## 按钮
 
 ![image-20201020152844193](image-20201020152844193.png)
@@ -78,6 +125,10 @@
     <button type="submit" class="jui-btn btn-dark">上传文件</button>
 </form>
 ```
+## 表格
+
+
+
 ## 分页
 
 ![image-20201020204849568](image-20201020204849568.png)
