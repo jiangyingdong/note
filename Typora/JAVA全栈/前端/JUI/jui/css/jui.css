@@ -1,9 +1,18 @@
 * {
-    margin: 0px;
-    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;	
+	width: max-content;
 }
-
+input{
+	padding: 0px 10px 0px 10px;
+	border: 1px solid #959595;
+}
+input:focus{
+	background-color: #F0F0EE;
+	outline: none;/*去除聚焦时的高亮*/
+}
 .jui-inside-horizontal {
+	margin: auto;
     display: flex;
     flex-wrap: wrap;
 }
@@ -33,27 +42,23 @@
 /************************************************************************************************************************************************
  *  布局UI
  */
-html, body {
-    height: 100%;
+html{
+	width: auto;
+	height: max-content;
 }
 
 body {
+	width: 100%;
+	height: max-content;
     background: #ffffff;
     background-size: 100%;
 }
-
-.jui-body {
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .jui-body-top {
     width: 100%;
     height: 60px;
-    position: fixed;
-    margin-top: 0px;
-	z-index: 10;
+    position: absolute;
+    top: 0px;
+	z-index: 2;
 }
 
 .jui-body-middle {
@@ -64,84 +69,76 @@ body {
     overflow: hidden;
     display: flex;
     flex-wrap: nowrap;
+	z-index: 1;
 }
 
 .jui-body-bottom {
     width: 100%;
-    height: fit-content;
+    height: max-content;
     margin: auto 0px 0px 0px;
+	position: absolute;	
+	bottom: 0px;
+	z-index: 1;
+	
 }
 
 .jui-body-middle-left {
     margin: 5px 0px 5px auto;
+	z-index: 1;
 }
 
 .jui-body-middle-middle {
     margin: 5px;
     padding: 0px 0px 0px 0px;
     background: rgba(239, 239, 239, 0.3);
+	z-index: 1;
 }
 
 .jui-body-middle-right {
     margin: 5px auto 5px 0px;
+	z-index: 1;
 }
 
 .jui-row {
+    width: 100%;
     margin: 0px auto 8px auto;
     display: flex;
     flex-wrap: wrap;
+	z-index: 1;
 }
 
 /************************************************************************************************************************************************
  *  登录表单UI 
  */
-.jui-login-div {
-    width: 480px;
-    box-shadow: inset 0px 0px 7px 0px #b4b4b4;/*内部阴影 */
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    padding: 10% 7%;
-    font-family: "宋体";
-    font-size: 20px;
+form{
+	display: inline-block;
+	width: max-content;
+	border-radius: 10px;
+	box-shadow: 0px 0px 7px 0px #b4b4b4;
+	padding: 20px 0px 20px 0px;
 }
-
-.jui-login-div form {
+form *{
+	font-size: 24px;
+	font-family: "宋体";
 }
-
-.jui-login-div form div {
-    margin-bottom: 5%;
-    display: flex;
-    flex-wrap: wrap;
+form>div{
+	width: auto;
+	display: flex;
+	flex-wrap: nowrap;
+	margin: 0px 20px 15px 20px;
 }
-
-.jui-login-div form div label {
-    text-align: center;
-    width: 20%;
+form>div>*{
+	line-height: 40px;
 }
-
-.jui-login-div form div input {
-    width: 50%;
+form>div>label{
+	width: 100px;
+	display: inline-block;
+	white-space: nowrap;/*不换行*/
+	text-align: center;
+	background-color: #bdbdbd;
+	border:1px solid #bdbdbd;
+	border-radius: 10px 0px 0px 10px;
 }
-
-.jui-login-div form div div {
-    margin: auto;
-}
-
-.jui-login-div form div div span {
-    font-size: 10px;
-    color: #FF0000;
-}
-
-.jui-login-div form div div button {
-    width: 70px;
-    height: 50px;
-    margin: 0px 10px;
-    border-radius: 10px;
-    border: 0px;
-    background-color: #feff98;
-    box-shadow: 4px 4px 7px #b4b4b4;
-}
-
 /*************************************************************************************************************************************************
  * 表格
  */
@@ -230,6 +227,14 @@ body {
 	background-color: #ffffff;
 }
 
+input[type="checkbox"]{
+	margin: auto 0px;
+}
+input[type="checkbox"]+lable{
+	font-size: 18px;
+	margin: auto 5px auto 0px;
+	line-height: inherit;
+}
 /*************************************************************************************************************************************************
  * 按钮
  */
@@ -276,6 +281,48 @@ body {
     border-color: #343a40;
 }
 
+/*************************************************************************************************************************************************
+ * 弹窗
+ */
+.jui-popup{
+	width: 300px;
+	height: 100px;
+	border-radius:10px ;
+	background-color: #ffffff;
+	color: #000000;
+	box-shadow: 0px 0px 9px 0px #000000;
+	position: fixed;
+	top: calc(50% - 50px);
+	left: calc(50% - 150px);
+	z-index: 20;
+}
+.jui-curtain{
+	display: flex;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 19;
+}
+.jui-popup-1{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(166, 166, 166, 0.5);
+	position: fixed;
+	z-index: 20;
+	display: flex;
+	align-items: center; /*定义body的元素垂直居中*/
+	justify-content: center;/*定义body的元素水平居中*/
+}
+.jui-popup-1>*{
+	display: block;
+	width: max-content;
+	height: max-content;
+	margin: auto;
+	background-color: rgba(255, 255, 255, 1.0);
+}
 /*************************************************************************************************************************************************
  * 动画
  */

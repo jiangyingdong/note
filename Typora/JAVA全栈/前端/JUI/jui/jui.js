@@ -1,38 +1,49 @@
-function check() {
-	console.log("进行表单验证");
-	var flag = true;
-	var username = document.getElementById("username").value;
-	console.log(username);
-	if (!/^[a-zA-Z0-9_-]{1,10}/.test(username)) {
-		flag = false;
-		document.getElementById("username_tip").innerHTML = "用户名只能由字母数字和下划线组成！";
-	} else {
-		document.getElementById("username_tip").innerHTML = "";
-	}
-	var password = document.getElementById("password").value;
-	if (!/^\w{3,12}$/.test(password)) {
-		flag = false;
-		document.getElementById("password_tip").innerHTML = "密码只能由包括下划线的任何3-12个单词字符组成！"
-	} else {
-		document.getElementById("password_tip").innerHTML = "";
-	}
-	return false;
-}
-
-function clear_tip(form) {
-	console.log("清理提示信息");
-	console.log(jui.from_check(/^[a-zA-Z0-9_-]{1,10}/, 'username'));
-	var username_tip = document.getElementById("username_tip");
-	var password_tip = document.getElementById("password_tip");
-	username_tip.innerHTML = "";
-	password_tip.innerHTML = "";
-	return true;
-}
+document.write("<script src=\"/" + window.location.pathname.split("/")[1] + "/jui/jquery-3.5.1.min.js\"></script>") //加载其他JS
 
 var jui = {
+	rootPath: window.location.pathname.split("/")[1],//当前网站的根目录，不是tomcat根目录
+	loadJS: function(url, success) { //加载外部JS
+		var domScript = document.createElement('script');
+		domScript.src = url;
+		success = success || function() {};
+		domScript.onload = document.onreadystatechange = function() {
+			if (!this.readyState || 'load' === this.readyState || 'complete' === this.readyState) {
+				success();
+				this.onload = this.onreadystatechange = null;
+				this.parentNode.removeChild(this);
+			}
+		}
+		document.getElementsByTagName('head').appendChild(domScript);
+	},
 	check: {
-		from_check: function(regex, id) {
-			return regex.test(document.getElementById(id).value);
+		ifOK:false,
+		onsubmit:function(){
+			console.log(jui.check.ifOK);
+			if(jui.check.ifOK){
+				jui.check.ifOK = false;
+				return true;
+			}
+			return false;
+		},
+		username: function(me) {
+			if (!/^[A-Za-z0-9]{4,18}$/.test(me.value)) {
+				jui.createPopup("用户名错误", "用户名需要4到18位的数字或者字母！")
+				me.style.border = "1px solid #ff5500";
+				jui.check.ifOK = false;
+			} else {
+				me.style.border = "1px solid #55ff7f";
+				jui.check.ifOK = true;
+			}
+		},
+		password: function(me) {
+			if (!/^\w{6,18}$/.test(me.value)) {
+				jui.createPopup("密码错误！", "密码需要6到18位的数字或者字母！")
+				me.style.border = "1px solid #ff5500";
+				jui.check.ifOK = false;
+			} else {
+				me.style.border = "1px solid #55ff7f";
+				jui.check.ifOK = true;
+			}
 		}
 	},
 	fileSelect: function(id, me) {
@@ -97,6 +108,21 @@ var jui = {
 		var month = ('0' + (date.getMonth() + 1)).slice(-2);
 		var day = ('0' + date.getDate()).slice(-2);
 		var today = year + '-' + month + '-' + day;
-		obj.value=today;
+		obj.value = today;
+	},
+	createPopup: function(title, content) {
+		if ($("#popup").html() == undefined) {
+			var html =
+				"<div class=\"jui-curtain\"></div><div id=\"popup\" class=\"jui-popup\"><div class=\"jui-row jui-inside-horizontal\"><div class=\"jui-outside-center\" id=\"title\">标题</div></div><div class=\"jui-row jui-inside-horizontal\"><div class=\"jui-outside-center\" id=\"content\">内容</div></div></div>";
+			$("body").append(html);
+		}
+		$("#popup #title").text(title)
+		$("#popup #content").text(content);
+		$("#popup").show(); //显示弹窗
+		$(".jui-curtain").show(); //显示幕布
+		setTimeout(function() {
+			$("#popup").hide();
+			$(".jui-curtain").hide();
+		}, 1000); //1秒后隐藏弹窗
 	}
 };
