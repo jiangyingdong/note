@@ -381,7 +381,7 @@ Hadoop 部署模式有：本地模式、伪分布模式、完全分布式模式�
 
 ![img](http://upload-images.jianshu.io/upload_images/424634-183c7db38128fbf0)
 
-[hadoop@bigdata-senior01 ~]$ sudo vim  ${HADOOP_HOME}/etc/hadoop/core-site.xml
+`[hadoop@bigdata-senior01 ~]\$ sudo vim  ${HADOOP_HOME}/etc/hadoop/core-site.xml`
 
 （1） fs.defaultFS 参数配置的是HDFS的地址。
 

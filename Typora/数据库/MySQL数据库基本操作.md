@@ -108,7 +108,7 @@ where 条件3 and[or] 条件4 and[or] ...
 -- 2、分组过滤
 group by 字段名
 having 条件5 and[or] 条件6 and[or] ...
--- 3、排序选取指定记录，最后执行
+-- 3、排序选取指定记录，最后执行，默认升序，desc 降序
 order by 字段名
 limit 起始索引,记录条数
 ```

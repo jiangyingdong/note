@@ -9,9 +9,10 @@
 
 >`wget https://mirrors.cnnic.cn/apache/zookeeper/zookeeper-3.6.1/apache-zookeeper-3.6.1-bin.tar.gz`
 
-> 		或者先进入[https://mirrors.cnnic.cn/apache/zookeeper/](https://mirrors.cnnic.cn/apache/zookeeper/)选择版本，复制连接，再使用wget下载，记得选择带有 ‘-bin’ 的压缩包
+> ​	或者先进入[https://mirrors.cnnic.cn/apache/zookeeper/](https://mirrors.cnnic.cn/apache/zookeeper/)选择版本，复制连接，再使用wget下载，记得选择带有 ‘-bin’ 的压缩包
 
 **2.	解压**
+
 > `[root@node1 soft]# tar -zxvf apache-zookeeper-3.6.1-bin.tar.gz`
 
 > 如果解压时权限不够，则提升权限为root
@@ -23,7 +24,7 @@
 > `[root@node1 conf]# cp zoo_sample.cfg zoo.cfg`   
 
 修改 **zoo.cfg**，配置文件内容如下所示
-```xml
+```cmd
 tickTime=2000
 initLimit=10
 syncLimit=5
@@ -33,7 +34,7 @@ server.1=192.168.83.130:2888:3888
 ```
 如果没有目录 **/opt/soft/zooData**，则需自己创建，其中**192.168.83.130** 是本节点的IP
 
-```xml
+```cmd
 [root@node1 ~]# cd /opt
 [root@node1 opt]# mkdir soft
 [root@node1 opt]# cd soft
@@ -42,34 +43,33 @@ server.1=192.168.83.130:2888:3888
 
 启动 **zookeeper** 的端口 **2181，2888，3888**
 
-```xml
+```cmd
 [root@node1 ~]# firewall-cmd --zone=public --add-port=2181/tcp --permanent
 [root@node1 ~]# firewall-cmd --zone=public --add-port=2888/tcp --permanent
 [root@node1 ~]# firewall-cmd --zone=public --add-port=3888/tcp --permanent
 [root@node1 ~]# firewall-cmd --reload
 ```
 查看 已开启的端口
-```xml
+```cmd
 [root@node1 ~]# firewall-cmd --list-ports
 ```
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2020080816315067.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020080816315067.png) 
 
 **4. 配置 zookeeper 环境变量**
-```xml
+
+```cmd
 #zookeeper environment
 export ZOOKEEPER_HOME=~/soft/apache-zookeeper-3.6.1-bin
 export PATH=$PATH:$ZOOKEEPER_HOME/bin
 ```
-在 /etc/profile 文件末尾加上以上代码
-		
+在 /etc/profile 文件末尾加上以上代码		
 
-```xml
+```cmd
 [root@node1 ~]# vim /etc/profile
 ```
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200808164059950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Mjc4NTE3,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200808164059950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Mjc4NTE3,size_16,color_FFFFFF,t_70) 
 
-然后是环境变量立即生效
-		
+然后是环境变量立即生效		
 
 ```xml
 [root@node1 ~]# source /etc/profile
