@@ -19,6 +19,14 @@
 - delete
 - truncate
 
+###### 一句语句去重
+
+```mysql
+delete from 表名 where 主键 not in (
+	select 主键 from (select 主键 from 表名 group by 重复字段) m
+)
+```
+
 ##### MySQL修改表：
 
 ```sql
@@ -136,7 +144,7 @@ limit 起始索引,记录条数
 >
 > 面试题：
 >
-> > [聚簇索引、覆盖索引](https://blog.csdn.net/zycxnanwang/article/details/84447908)
+> > [聚簇索引、覆盖索引](https://blog.csdn.net/zycxnanwang/article/details/84447908) 
 > > B+ Tree索引和Hash索引区别
 
 - 普通索引
