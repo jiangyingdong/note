@@ -33,22 +33,24 @@
 >     - 当一个父类变量调用被子类重写的方法时，随着父类变量指向的子类实例的不同，该方法所执行的实例也不一样
 >
 
-## 抽象类与接口的区别
+## 抽象类、接口
 
 > - 抽象类是一个类，具有一般类的特征，细节方面有些不同。
->
 > - 声明与继承实现的关键字不同
 > - 单继承与多实现
 >     - 子类只能继承一个父类，但是可以实现多个接口。
 >     - 接口可以继承多个接口，不能实现接口。
 > - 权限修饰符的使用：
->     - 抽象类中不能使用default；接口默认public，还可以使用default。
+>     - 抽象类和一般类一样，权限修饰符默认的就是没有权限修饰符（缺省），表示只有同包和本类中可以访问。
+>     - default只能在接口中使用，只能修饰方法（被修饰的方法必须有方法体），且只能单独使用，无法与static、final一起使用。
+>     - 抽象类中abstract只能和public、protected一起使用，且只能修饰方法，也无法与static、final一起使用。
+>     - 接口属性默认且只能被public final static修饰，方法默认public修饰，无法被final修饰，使用static的方法需要有方法体，此外只能被default单独修饰。
 >     - 抽象类中private修饰的无法继承；接口中default修饰的方法必须有具体实现，重写的时候修改为public。
 > - 两者都无法抽象成员属性，只能抽象方法，而且无法抽象静态方法。
->     - 接口中成员属性默认且只能被final public修饰，必须实例化，不可修改；抽象类的成员属性不可被abstract修饰。
+>     - 接口中成员属性默认且只能被public final static修饰，必须实例化，不可修改；抽象类的成员属性不可被abstract修饰。	
 > - 静态成员（static修饰）的处理不同
->     - 抽象类中的静态**成员**可以继承，但是接口中的静态**方法**无法继承
-> - 抽象类可以有构造函数，接口没有；虽然都无法创建实例
+>     - 抽象类中的静态**成员**可以继承，但是接口中的静态**方法**无法继承。
+> - 抽象类可以有构造函数，接口没有；虽然都无法创建实例。
 >
 
 ## 集合
@@ -58,7 +60,7 @@
 > - ![img](https://img-blog.csdnimg.cn/20190327175421590.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMwNzExMDkx,size_16,color_FFFFFF,t_70) 
 >
 
-## Java字符串对象的区别
+## 字符串对象
 
 | String                                                       | StringBuffer                                                 | StringBuilder    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- |
@@ -67,4 +69,15 @@
 |                                                              | 线程安全                                                     | 线程不安全       |
 |                                                              | 多线程操作字符串                                             | 单线程操作字符串 |
 
-## 设计模式
+## 常见异常
+
+> - NullPointerExcetion
+> - OutOfMemoryError
+> - IOExcetion
+> - FileNotFoundException
+> - ClassNotFoundException
+> - ClassCastException
+> - NoSuchMethodException
+> - IndexOutBoundsException
+> - ArithmeticExcecption
+> - SQLException
