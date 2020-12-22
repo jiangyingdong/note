@@ -53,7 +53,7 @@
 > - 抽象类可以有构造函数，接口没有；虽然都无法创建实例。
 >
 
-## 集合
+## 集合详情
 
 > - [List、Set、Map](https://blog.csdn.net/qq_30711091/article/details/88847892)
 > - ![img](https://img-blog.csdn.net/20180725145224835?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjMxMTU0MA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70) 
@@ -81,3 +81,81 @@
 > - IndexOutBoundsException
 > - ArithmeticExcecption
 > - SQLException
+
+## [四种线程](https://www.cnblogs.com/duanjiapingjy/p/9434244.html)：
+
+- 继承Thread类，重写run方法
+
+- 实现Runnable接口，重写run方法
+
+- 实现Callable接口，重写call方法，可返回参数
+
+    - 使用Callable实现类（指定泛型，跟call返回值对应）对象作为参数，创建一个FutureTask类对象；利用FutureTask类对象作为参数创建一个Thread类对象作为一个线程对象；FutureTask对象方法get用于获取call方法的返回值。
+
+- [使用线程池（四种）](https://www.cnblogs.com/jiawen010/p/11855768.html)
+
+    > 线程池的好处：
+    >
+    > - 降低资源消耗
+    > - 提高响应速度
+    > - 提高线程的可管理性
+
+    - 方法1：使用Executors的类方法newFixedThreadPool获取一个指定池大小的ExecutorService类对象，使用ExecutorService对象方法submit传入Runnable实现类对象作为参数来添加线程并启动；可以使用ExecutorService对象方法shutdown（和平的）shutdownNow（立即的）来关闭线程池。
+    - 方法2：...
+
+### 并发编程：
+
+- 原子性
+    - 即一个操作或者多个操作 要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。
+- 可见性
+    - 可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。
+- 有序性
+    - 即程序执行的顺序按照代码的先后顺序执行。因为为了提高代码执行效率可能会进行代码重排序，只是最后结果保持不变。
+
+###  [线程安全](https://blog.csdn.net/csdnnews/article/details/82321777)：
+
+> 限制多线程访问互斥资源，使互斥资源一次只能被一个线程访问。
+
+- [synchronized关键字](https://blog.csdn.net/weixin_36759405/article/details/83034386)
+- Lock类，使用对象方法lock、unlock来获取或者释放锁 
+
+### [线程通信](https://blog.csdn.net/u010919402/article/details/105446136?utm_medium=distribute.pc_relevant.none-task-blog-title-2&spm=1001.2101.3001.4242)：
+
+> 都是基于俩种通信模型：共享内存、消息传递
+
+- [volatile关键字](https://www.cnblogs.com/dolphin0520/p/3920373.html)
+
+- [Object类对象方法wait、notify、notifyAll](https://www.cnblogs.com/moongeek/p/7631447.html)
+
+    > 配合synchronized使用，在互斥区中使用
+
+    - wait方法阻塞当前线程，并且自动释放获得的锁；[跟sleep有区别](https://blog.csdn.net/qq_20009015/article/details/89980966)
+    - notify方法唤醒指定的阻塞线程，但是不会自动释放锁；notifyAll唤醒所有阻塞的线程
+
+- ...
+
+## Lambda
+
+> 函数式编程。
+>
+> 为接口方法编辑方法体（该接口只能有一个方法），类似于匿名类。已实现的方法无法编辑。
+>
+> lambda 表达式只能引用标记了 final 的外层局部变量，这就是说不能在 lambda 内部修改定义在域外的局部变量，否则会编译错误。
+
+> ```java
+> // 1. 不需要参数,返回值为 5  
+> () -> 5  
+>   
+> // 2. 接收一个参数(数字类型),返回其2倍的值  
+> x -> 2 * x  
+>   
+> // 3. 接受2个参数(数字),并返回他们的差值  
+> (x, y) -> x – y  
+>   
+> // 4. 接收2个int型整数,返回他们的和  
+> (int x, int y) -> x + y  
+>   
+> // 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  
+> (String s) -> System.out.print(s)
+> ```
+
